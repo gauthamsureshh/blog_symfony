@@ -16,10 +16,6 @@ class BlogType extends AbstractType
         $builder
             ->add('title')
             ->add('content')
-            ->add('author', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
         ;
     }
 
