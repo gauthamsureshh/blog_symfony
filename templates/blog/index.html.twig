@@ -30,8 +30,8 @@
 				{% for blog in blogs %}
 					<div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 relative">
 						<div class="absolute top-4 right-4 text-sm text-gray-500 dark:text-yellow-400">
-							<p>Created by:
-								{{ blog.author.username|capitalize }}</p>
+							<a href={{ path('app_profile_view', {'id': blog.author.id} ) }}>Created by:
+								{{ blog.author.username|capitalize }}</a>
 							{% if app.user == blog.author %}
 								<div class="flex space-x-3 mt-2">
 									<a href="{{ path('app_blog_edit', {'id': blog.id }) }}" class="text-blue-500 hover:text-blue-700">
@@ -54,6 +54,35 @@
 						<h3 class="text-gray-700 dark:text-gray-300">
 							{{ blog.content }}
 						</h3>
+
+						<div class="mt-4">
+							{% if blog.likedBy.contains(app.user) %}
+								<a href="{{ path('app_unlike', {'id': blog.id }) }}" class="inline-flex items-center text-red-500 hover:text-red-700">
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewbox="0 0 20 20" fill="currentColor">
+										<path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656l-6.828 6.829a.5.5 0 01-.707 0L3.172 10.83a4 4 0 010-5.656z"/>
+									</svg>
+									{% if blog.likedBy.count > 0 %}
+										<span class="ml-1 text  dark:text-red-400">
+											Liked By
+											{{blog.likedBy.count}}
+											person</span>
+									{% endif %}
+								</a>
+							{% else %}
+								<a href="{{ path('app_like', {'id': blog.id }) }}" class="inline-flex items-center text-blue-500 hover:text-blue-700">
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewbox="0 0 20 20" fill="currentColor">
+										<path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656l-6.828 6.829a.5.5 0 01-.707 0L3.172 10.83a4 4 0 010-5.656z"/>
+									</svg>
+									{% if blog.likedBy.count > 0 %}
+										<span class="ml-2 text  dark:text-red-400">
+											Liked By
+											{{blog.likedBy.count}}
+											person</span>
+									{% endif %}
+								</a>
+							{% endif %}
+
+						</div>
 					</div>
 				{% endfor %}
 			{% endif %}
