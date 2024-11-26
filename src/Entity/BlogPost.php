@@ -134,7 +134,7 @@ class BlogPost
     public function removeLikedBy(User $likedBy): static
     {
         $this->likedBy->removeElement($likedBy);
-
+ 
         return $this;
     }
 }

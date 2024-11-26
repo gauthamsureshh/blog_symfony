@@ -2,33 +2,58 @@
 
 {% block title %}User Profile
 {% endblock %}
-
 {% block body %}
 	<div class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-		<div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md max-w-md text-center">
-		<h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">User Profile</h2>
-			<div class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-				{{ user.userProfile.name ?? user.email }}
+		<div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md max-w-lg">
+			<h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center">User Profile</h2>
+
+			<!-- Top Section: Profile Image and Name -->
+			<div
+				class="flex items-center mb-6 gap-4">
+				<!-- Profile Image -->
+				<div>
+					{% if user.userProfile.image %}
+						<img src="{{ profiles ~ user.userProfile.image }}" alt="Profile Image" class="rounded-md w-24 h-24">
+					{% else %}
+						<div class="rounded-md bg-gray-300 dark:bg-gray-700 w-24 h-24 flex items-center justify-center text-gray-500 dark:text-gray-400">
+							No Image
+						</div>
+					{% endif %}
+				</div>
+
+				<!-- Name and Email -->
+				<div>
+					<div class="text-2xl font-semibold text-gray-900 dark:text-white">
+						{{ user.userProfile.name ?? user.email }}
+					</div>
+					<div class="text-lg text-gray-500 dark:text-gray-400">
+						{{ user.email }}
+					</div>
+				</div>
 			</div>
-			<div class="text-lg text-gray-500 dark:text-gray-400 font-normal mb-6">
-				{{ user.email }}
-			</div>
+
+			<!-- Bottom Section: Other Details -->
 			{% if user.userProfile != null %}
 				<div
 					class="space-y-4">
-					<div class="flex items-center justify-center space-x-3 text-base text-gray-800 dark:text-gray-400 font-normal">
+					<!-- Bio -->
+					<div class="flex items-start space-x-3 text-base text-gray-800 dark:text-gray-400 font-normal">
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 dark:text-gray-300" viewbox="0 0 20 20" fill="currentColor">
 							<path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 9a2 2 0 114 0 2 2 0 01-4 0zm5 5H7a1 1 0 000 2h6a1 1 0 000-2z" clip-rule="evenodd"/>
 						</svg>
-						<span>{{ user.userProfile.bio ?? 'No bio' }}</span>
+						<span>{{ user.userProfile.bio ?? 'No bio available' }}</span>
 					</div>
-					<div class="flex items-center justify-center space-x-3 text-base text-gray-500 dark:text-gray-400 font-normal">
+
+					<!-- Address -->
+					<div class="flex items-start space-x-3 text-base text-gray-800 dark:text-gray-400 font-normal">
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 dark:text-gray-300" viewbox="0 0 20 20" fill="currentColor">
 							<path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
 						</svg>
-						<span>{{ user.userProfile.address ?? 'Unknown' }}</span>
+						<span>{{ user.userProfile.address ?? 'Unknown address' }}</span>
 					</div>
-					<div class="flex items-center justify-center space-x-3 text-base text-gray-500 dark:text-gray-400 font-normal">
+
+					<!-- Date of Birth -->
+					<div class="flex items-start space-x-3 text-base text-gray-800 dark:text-gray-400 font-normal">
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 dark:text-gray-300" viewbox="0 0 20 20" fill="currentColor">
 							<path fill-rule="evenodd" d="M6 3a1 1 0 011-1h.01a1 1 0 010 2H7a1 1 0 01-1-1zm2 3a1 1 0 00-2 0v1a2 2 0 00-2 2v1a2 2 0 00-2 2v.683a3.7 3.7 0 011.055.485 1.704 1.704 0 001.89 0 3.704 3.704 0 014.11 0 1.704 1.704 0 001.89 0 3.704 3.704 0 014.11 0 1.704 1.704 0 001.89 0A3.7 3.7 0 0118 12.683V12a2 2 0 00-2-2V9a2 2 0 00-2-2V6a1 1 0 10-2 0v1h-1V6a1 1 0 10-2 0v1H8V6zm10 8.868a3.704 3.704 0 01-4.055-.036 1.704 1.704 0 00-1.89 0 3.704 3.704 0 01-4.11 0 1.704 1.704 0 00-1.89 0A3.704 3.704 0 012 14.868V17a1 1 0 001 1h14a1 1 0 001-1v-2.132zM9 3a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm3 0a1 1 0 011-1h.01a1 1 0 110 2H13a1 1 0 01-1-1z" clip-rule="evenodd"/>
 						</svg>
@@ -40,8 +65,15 @@
 							{% endif %}
 						</span>
 					</div>
+					<div>
+						<a href="{{ path('app_blog') }}" class="block w-full text-center shadow-sm border-transparent bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-white rounded-md border p-2 mt-4 mb-2">
+							Go Back
+						</a>
+					</div>
+
 				</div>
 			{% endif %}
 		</div>
+
 	</div>
 {% endblock %}

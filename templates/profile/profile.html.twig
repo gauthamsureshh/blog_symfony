@@ -5,39 +5,58 @@
 {% endblock %}
 
 {% block body %}
-	{% include "partials/navbar.html.twig" %}
-	<div class="flex justify-center items-center min-h-[calc(100vh-5rem)] bg-gray-100 dark:bg-gray-800">
-	<div class="w-full max-w-5xl bg-white dark:bg-gray-900 shadow-lg rounded-lg p-5 ">
-		<h2 class="text-2xl font-semibold text-center text-gray-700 dark:text-gray-300 mb-6">Profile</h2>
-		{{ form_start(form, {'attr':{'novalidate':'novalidate'}}) }}
-		<div>{{form_errors(form)}}</div>
-		<div>
-			{{ form_label(form.name, 'Name', {'label_attr': {'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium'}}) }}
-			{{ form_widget(form.name, {'attr': {'class': 'block w-full shadow-sm border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-300 bg-white dark:bg-gray-800 rounded-md border p-2 mt-1 mb-2'}}) }}
-			{{ form_errors(form.name) }}
-		</div>
-		<div>
-			{{ form_label(form.address, 'Address', {'label_attr': {'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium'}}) }}
-			{{ form_widget(form.address, {'attr': {'class': 'block w-full shadow-sm border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-300 bg-white dark:bg-gray-800 rounded-md border p-2 mt-1 mb-2'}}) }}
-			{{ form_errors(form.address) }}
-		</div>
-        <div>
-			{{ form_label(form.dateOfBirth, 'DOB', {'label_attr': {'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium'}}) }}
-			{{ form_widget(form.dateOfBirth, {'attr': {'class': 'block w-full shadow-sm border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-300 bg-white dark:bg-gray-800 rounded-md border p-2 mt-1 mb-2'}}) }}
-			{{ form_errors(form.dateOfBirth) }}
-		</div>
-        <div>
-			{{ form_label(form.bio, 'Bio', {'label_attr': {'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium'}}) }}
-			{{ form_widget(form.bio, {'attr': {'class': 'block w-full shadow-sm border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-300 bg-white dark:bg-gray-800 rounded-md border p-2 mt-1 mb-2'}}) }}
-			{{ form_errors(form.bio) }}
-		</div>
-		<div>
-			<button type="submit" class="block w-full shadow-sm border-transparent bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-white rounded-md border p-2 mt-4 mb-2">Save</button>
-		</div>
-		{{ form_end(form) }}
-	</div>
-</div>
-
-
-
+    {% include "partials/navbar.html.twig" %}
+    <div class="flex justify-center items-center min-h-[calc(100vh-5rem)] bg-gray-100 dark:bg-gray-800">
+        <div class="w-full max-w-5xl bg-white dark:bg-gray-900 shadow-lg rounded-lg p-5">
+            <h2 class="text-2xl font-semibold text-center text-gray-700 dark:text-gray-300 mb-6">Profile</h2>
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            <div>{{ form_errors(form) }}</div>
+            <div class="flex items-center mb-6 gap-6">
+                <div>
+                    {% if profile.image %}
+                        <img src="{{ profiles ~ profile.image }}" alt="Profile Image" class="rounded-md w-24 h-24">
+                    {% else %}
+                        <div class="rounded-md bg-gray-300 dark:bg-gray-700 w-24 h-24 flex items-center justify-center text-gray-500 dark:text-gray-400">
+                            No Image
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="flex-1">
+                    {{ form_label(form.name, 'Name', {'label_attr': {'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium'}}) }}
+                    {{ form_widget(form.name, {'attr': {'class': 'block w-full shadow-sm border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-300 bg-white dark:bg-gray-800 rounded-md border p-2 mt-1 mb-2'}}) }}
+                    {{ form_errors(form.name) }}
+                </div>
+            </div>
+            <div>
+                <div class="mb-4">
+                    {{ form_label(form.address, 'Address', {'label_attr': {'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium'}}) }}
+                    {{ form_widget(form.address, {'attr': {'class': 'block w-full shadow-sm border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-300 bg-white dark:bg-gray-800 rounded-md border p-2 mt-1'}}) }}
+                    {{ form_errors(form.address) }}
+                </div>
+                <div class="mb-4">
+                    {{ form_label(form.dateOfBirth, 'DOB', {'label_attr': {'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium'}}) }}
+                    {{ form_widget(form.dateOfBirth, {'attr': {'class': 'block w-full shadow-sm border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-300 bg-white dark:bg-gray-800 rounded-md border p-2 mt-1'}}) }}
+                    {{ form_errors(form.dateOfBirth) }}
+                </div>
+                <div class="mb-4">
+                    {{ form_label(form.bio, 'Bio', {'label_attr': {'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium'}}) }}
+                    {{ form_widget(form.bio, {'attr': {'class': 'block w-full shadow-sm border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-300 bg-white dark:bg-gray-800 rounded-md border p-2 mt-1'}}) }}
+                    {{ form_errors(form.bio) }}
+                </div>
+            </div>
+            <div class="flex justify-end mt-3">
+                <a href="{{ path('app_profile_image') }}" class="flex items-center text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    Upload Profile Picture
+                </a>
+            </div>
+            <div>
+                <button type="submit" class="block w-full shadow-sm border-transparent bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-white rounded-md border p-2 mt-4 mb-2">Save</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}
+
